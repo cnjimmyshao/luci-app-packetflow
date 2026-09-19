@@ -1,0 +1,13 @@
+{
+  "admin/status/packetflow": {
+    "title": "Packet Flow",
+    "order": 95,
+    "action": {
+      "type": "view",
+      "path": "packetflow/overview"
+    },
+    "depends": {
+      "acl": [ "luci-app-packetflow" ]
+    }
+  }
+}
