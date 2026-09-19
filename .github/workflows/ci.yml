@@ -1,0 +1,21 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  static-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check LuCI JavaScript syntax
+        run: node --check htdocs/luci-static/resources/view/packetflow/overview.js
+      - name: Validate JSON manifests
+        run: |
+          python3 -m json.tool root/usr/share/luci/menu.d/luci-app-packetflow.json >/dev/null
+          python3 -m json.tool root/usr/share/rpcd/acl.d/luci-app-packetflow.json >/dev/null
+      - name: Guard read-only v0.x
+        run: |
+          ! grep -RE "nft[[:space:]].*(add|delete|insert|replace|flush)|ip[[:space:]].*(rule|route)[[:space:]].*(add|del|replace|flush)" \
+            htdocs root docs --exclude='*.md'
