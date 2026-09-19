@@ -1,0 +1,12 @@
+{
+  "luci-app-packetflow": {
+    "description": "Grant read-only access to Packet Flow Inspector",
+    "read": {
+      "ubus": {
+        "file": [ "exec" ],
+        "network.interface": [ "dump" ],
+        "network.device": [ "status" ]
+      }
+    }
+  }
+}
